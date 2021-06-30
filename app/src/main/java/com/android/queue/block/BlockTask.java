@@ -1,7 +1,5 @@
 package com.android.queue.block;
 
-import android.util.Log;
-
 import java.util.concurrent.LinkedBlockingDeque;
 
 /**
@@ -10,8 +8,13 @@ import java.util.concurrent.LinkedBlockingDeque;
  */
 public class BlockTask implements Runnable {
     private BlockExecListener blockEmptyListener;
-    private LinkedBlockingDeque<BlockTaskBean> blockingDeque = new LinkedBlockingDeque<>();
+    private LinkedBlockingDeque<BlockTaskBean> blockingDeque;
     private boolean isStart = true;
+
+    public BlockTask(LinkedBlockingDeque<BlockTaskBean> blockingDeque) {
+        this.blockingDeque = blockingDeque;
+    }
+
     @Override
     public void run() {
         while (isStart) {

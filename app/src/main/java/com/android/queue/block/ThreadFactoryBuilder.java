@@ -30,32 +30,32 @@ public class ThreadFactoryBuilder {
     }
 
     private static ThreadFactory doBuild(ThreadFactoryBuilder builder) {
-        final String var1 = builder.nameFormat;
-        final Boolean var2 = builder.daemon;
-        final Integer var3 = builder.priority;
-        final Thread.UncaughtExceptionHandler var4 = builder.uncaughtExceptionHandler;
-        final ThreadFactory var5 = builder.backingThreadFactory != null
+        final String nameFormat = builder.nameFormat;
+        final Boolean daemon = builder.daemon;
+        final Integer priority = builder.priority;
+        final Thread.UncaughtExceptionHandler uncaughtExceptionHandler = builder.uncaughtExceptionHandler;
+        final ThreadFactory threadFactory = builder.backingThreadFactory != null
                 ? builder.backingThreadFactory : Executors.defaultThreadFactory();
-        final AtomicLong var6 = var1 != null ? new AtomicLong(0L) : null;
+        final AtomicLong atomicLong = nameFormat != null ? new AtomicLong(0L) : null;
         return runnable -> {
-            Thread var2x = var5.newThread(runnable);
-            if (var1 != null) {
-                var2x.setName(ThreadFactoryBuilder.format(var1, var6.getAndIncrement()));
+            Thread thread = threadFactory.newThread(runnable);
+            if (nameFormat != null) {
+                thread.setName(ThreadFactoryBuilder.format(nameFormat, atomicLong.getAndIncrement()));
             }
 
-            if (var2 != null) {
-                var2x.setDaemon(var2);
+            if (daemon != null) {
+                thread.setDaemon(daemon);
             }
 
-            if (var3 != null) {
-                var2x.setPriority(var3);
+            if (priority != null) {
+                thread.setPriority(priority);
             }
 
-            if (var4 != null) {
-                var2x.setUncaughtExceptionHandler(var4);
+            if (uncaughtExceptionHandler != null) {
+                thread.setUncaughtExceptionHandler(uncaughtExceptionHandler);
             }
 
-            return var2x;
+            return thread;
         };
     }
 

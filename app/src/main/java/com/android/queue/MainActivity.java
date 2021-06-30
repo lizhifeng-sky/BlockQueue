@@ -3,7 +3,6 @@ package com.android.queue;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,6 +11,7 @@ import com.android.queue.block.BlockTask;
 import com.android.queue.block.BlockTaskBean;
 import com.android.queue.block.BlockTaskManager;
 import com.android.queue.block.UserBean;
+import com.android.queue.lock.CrossPrint;
 
 public class MainActivity extends AppCompatActivity {
     private TextView time_1;
@@ -32,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
         BlockTaskManager.getInstance().start(new BlockExecListener() {
             @Override
             public void onEmpty() {
-                Log.e("Main  onEmpty",Thread.currentThread().getName());
+//                Log.e("Main  onEmpty",Thread.currentThread().getName());
             }
 
             @Override
             public void onExec(BlockTaskBean blockTaskBean) {
-                Log.e("Main  onExec",Thread.currentThread().getName());
+//                Log.e("Main  onExec",Thread.currentThread().getName());
             }
         });
         time_1.setOnClickListener(new View.OnClickListener() {
@@ -55,13 +55,15 @@ public class MainActivity extends AppCompatActivity {
         time_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BlockTaskManager.getInstance().addTask(new BlockTaskBean(new UserBean("time_3","10"), 2000));
+                BlockTaskManager.getInstance().addTask(
+                        new BlockTaskBean(new UserBean("time_3","10"), 2000));
             }
         });
         time_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BlockTaskManager.getInstance().addTask(new BlockTaskBean(new UserBean("time_4","10"), 2000));
+                BlockTaskManager.getInstance().addTask(
+                        new BlockTaskBean(new UserBean("time_4","10"), 2000));
             }
         });
 
